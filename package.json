@@ -1,0 +1,25 @@
+{
+	"name": "stdnative",
+	"version": "1.23.1",
+	"version_number": 1001023001,
+	"private": true,
+	"scripts": {
+		"start": "node node_modules/react-native/local-cli/cli.js start",
+		"test": "jest"
+	},
+	"dependencies": {
+		"@remobile/react-native-cordova": "^1.1.1",
+		"@remobile/react-native-file-transfer": "^1.0.7",
+		"react": "16.0.0-alpha.12",
+		"react-native": "0.47.1"
+	},
+	"devDependencies": {
+		"babel-jest": "21.0.0",
+		"babel-preset-react-native": "3.0.2",
+		"jest": "21.0.1",
+		"react-test-renderer": "16.0.0-alpha.12"
+	},
+	"jest": {
+		"preset": "react-native"
+	}
+}
