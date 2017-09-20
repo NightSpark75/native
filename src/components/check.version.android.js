@@ -10,8 +10,9 @@ const VERSION_NUMBER = 1001023007;
 const URL_VERSION = 'http://172.17.100.51/api/native/pad/bundle/version';
 const URL_DOWNLOAD = 'http://172.17.100.51/api/native/pad/bundle/download';
 
-export default function native(platform) {
-    class StdNative extends Component {
+
+export default function checkVersion() {
+    class CheckVersion extends Component {
         constructor(props) {
             super(props);
 
@@ -97,5 +98,5 @@ export default function native(platform) {
         }
     });
 
-    AppRegistry.registerComponent('stdnative', () => StdNative);
+    AppRegistry.registerComponent('checkversion', () => CheckVersion);
 }
