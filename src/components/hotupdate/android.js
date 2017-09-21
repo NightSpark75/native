@@ -11,8 +11,8 @@ const URL_VERSION = 'http://172.17.100.51/api/native/pad/bundle/version';
 const URL_DOWNLOAD = 'http://172.17.100.51/api/native/pad/bundle/download';
 
 
-export default function checkVersion() {
-    class CheckVersion extends Component {
+export default function hotUpdate() {
+    class hotUpdate extends Component {
         constructor(props) {
             super(props);
 
@@ -67,7 +67,7 @@ export default function checkVersion() {
 
         reboot() {
             this.setState({ message: '更新檔已下載完成，請重開應用程式...' });
-            //RNRestart.Restart();
+            RNRestart.Restart();
         }
 
         render() {
@@ -97,6 +97,5 @@ export default function checkVersion() {
             margin: 10,
         }
     });
-
-    AppRegistry.registerComponent('checkversion', () => CheckVersion);
+    AppRegistry.registerComponent('stdnative', () => hotUpdate);
 }
