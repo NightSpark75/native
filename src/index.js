@@ -1,6 +1,6 @@
 'use strict'
 
-import check_version_android from './components/hotupdate/android';
+import check_version_android from './components/HotUpdate/android';
 
 export default function native(platform) {
     switch (platform) {

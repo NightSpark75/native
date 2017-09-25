@@ -1,9 +1,10 @@
 'use strict'
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View } from 'react-native';
+import { AppRegistry, StyleSheet, Text, View, Navigator, TouchableOpacity } from 'react-native';
 import FileTransfer from '@remobile/react-native-file-transfer';
 import RNFS from 'react-native-fs';
 import RNRestart from 'react-native-restart';
+import Login from '../Login'
 
 const VERSION = '1.23.7'
 const VERSION_NUMBER = 1001023007;
@@ -58,6 +59,7 @@ export default function hotUpdate() {
                     } else {
                         self.setState({ message: '沒有新版本需要更新...' })
                         // go login
+                        $self.start();
                     }
                 })
                 .catch(function(error) { 
@@ -70,11 +72,19 @@ export default function hotUpdate() {
             RNRestart.Restart();
         }
 
+        start() {
+            const { navigator } = this.props;
+            navigator.push({
+                name: 'Login',
+                component: Login,
+            });
+        }
+
         render() {
             return (
                 <View style={styles.container}>
                     <Text style={styles.welcome} >
-                        {VERSION}
+                        版本：{VERSION}
                     </Text>
                     <Text style={styles.welcome} >
                         {this.state.message}
