@@ -4,11 +4,11 @@ import android.app.Application;
 import android.os.Environment;
 
 import com.facebook.react.ReactApplication;
+import com.remobile.filetransfer.RCTFileTransferPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.remobile.filetransfer.RCTFileTransferPackage;
 import com.rnfs.RNFSPackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 
@@ -20,16 +20,20 @@ import android.util.Log;
 import android.support.annotation.Nullable;
 
 public class MainApplication extends Application implements ReactApplication {
-    private File bundleFile = null;
-    
+
     private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
-        @Nullable
+        
         @Override
         protected String getJSBundleFile() {
+            String path = "/data/user/0/com.stdnative/files/index.android.bundle";
+            //String path = "/sdcard/data/index.android.bundle";
+            
+            File bundleFile = new File(path);
             if (bundleFile != null && bundleFile.exists()) {
-                return bundleFile.getPath();
+                return path;
+            } else {
+                return null;
             }
-            return null;
         }
 
         @Override
@@ -58,8 +62,7 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     public void onCreate() {
-        super.onCreate();
+        super.onCreate(); 
         SoLoader.init(this, /* native exopackage */ false);
-        bundleFile = new File("/data/user/0/com.stdnative/files/index.android.bundle");
     }
 }

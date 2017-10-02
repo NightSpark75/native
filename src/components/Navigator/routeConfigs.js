@@ -1,4 +1,5 @@
 import hotUpdate from '../../components/HotUpdate/android';
+import Root from '../Root';
 import Login from '../Login';
 
 /*
@@ -54,6 +55,14 @@ export default {
         navigationOptions: ({navigation}) => ({
             header: null,
             headerBackTitle: null,
+        }),
+    },
+    Root: {
+        screen: Root,
+        navigationOptions: ({navigation}) => ({
+            header: null,
+            headerBackTitle: null,
+            headerLeft: null,
         }),
     },
     Login: {

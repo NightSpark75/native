@@ -5,10 +5,9 @@ import { StackNavigator, NavigationActions } from 'react-navigation'
 import FileTransfer from '@remobile/react-native-file-transfer';
 import RNFS from 'react-native-fs';
 import RNRestart from 'react-native-restart';
-import Login from '../Login'
 
-const VERSION = '1.23.7'
-const VERSION_NUMBER = 1001023007;
+const VERSION = '1.23.9'
+const VERSION_NUMBER = 1001023009;
 const URL_VERSION = 'http://172.17.100.51/api/native/pad/bundle/version';
 const URL_DOWNLOAD = 'http://172.17.100.51/api/native/pad/bundle/download';
 
@@ -30,27 +29,24 @@ export default class hotUpdate extends Component {
             .then((response) => response.json())
             .then((json) => {
                 self.setState({ message: '最新版本為：' + json.version });
+                let bundlePath = RNFS.DocumentDirectoryPath + '/index.android.bundle';
+                //let bundlePath = '/sdcard/data/index.android.bundle';
+                //let bundlePath = '/data/user/0/com.stdnative/cache/123131.bundle'
                 if (json.result && (json.version_number > VERSION_NUMBER)) {
                     let fileTransfer = new FileTransfer();
-                    let bundlePath = RNFS.DocumentDirectoryPath + '/index.android.bundle';
                     let msg;
+                    self.setState({ message: '下載程序開始' });
                     fileTransfer.onprogress = (progress) => {
-                        //self.setState({ message: progress.loaded + '/' + progress.total })
-                        if (progress.lengthComputable) {
-                            //loadingStatus.setPercentage(progress.loaded / progress.total);
-                            self.setState({ message: progress.loaded + '/' + progress.total })
-                        } else {
-                            //loadingStatus.increment();
-                        }
+                        self.setState({ message: progress.loaded + '/' + progress.total })
                     };
                     // url：新版本bundle的zip的url地址
                     // bundlePath：存在新版本bundle的路径
                     // unzipJSZipFile：下载完成后执行的回调方法，这里是解压缩zip
                     //self.setState({ message: URL_DOWNLOAD })
-                    fileTransfer.download(URL_DOWNLOAD, bundlePath //self.state.path 
+                    fileTransfer.download(encodeURI(URL_DOWNLOAD), bundlePath 
                     , (result) => {
-                        self.reboot();
-                        self.setState({ path: bundlePath});
+                        console.log(result);
+                        self.setState({ message: '程式已更新，請重新啟動!!'});
                     }
                     , (err) => {
                         console.log(err);
@@ -60,15 +56,7 @@ export default class hotUpdate extends Component {
                     );
                 } else {
                     self.setState({ message: '沒有新版本需要更新...' });
-                    const resetAction = NavigationActions.reset({
-                        index: 0,
-                        actions: [
-                            NavigationActions.navigate({
-                                routeName: 'Login',
-                            })
-                        ]
-                    });
-                    this.props.navigation.dispatch(resetAction);
+                    self.goLogin();
                 }
             })
             .catch(function(error) { 
@@ -76,18 +64,25 @@ export default class hotUpdate extends Component {
             });
     }
 
-    reboot() {
-        this.setState({ message: '更新檔已下載完成，請重開應用程式...' });
-        RNRestart.Restart();
+    goLogin() {
+        const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({
+                    routeName: 'Root',
+                })
+            ]
+        });
+        this.props.navigation.dispatch(resetAction);
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome} >
+                <Text style={styles.welcome}>
                     版本：{VERSION}
                 </Text>
-                <Text style={styles.welcome} >
+                <Text style={styles.welcome}>
                     {this.state.message}
                 </Text>
             </View>
