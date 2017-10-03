@@ -13,7 +13,12 @@ import material from '../NativeBase/variables/material';
 export default class Root extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            menu_list: [
+                {name: '1111'}, 
+                {name: '2222'}
+            ],
+        };
     }
 
     closeDrawer = () => {
@@ -29,7 +34,7 @@ export default class Root extends Component {
             <StyleProvider style={getTheme(material)}>
                 <Drawer
                     ref={(ref) => { this.drawer = ref; }}
-                    content={<SideBar navigator={this.navigator} />}
+                    content={<SideBar navigator={this.navigator} menu={this.state.menu_list} />}
                     onClose={() => this.closeDrawer()} >
                     <Hello openDrawer={this.openDrawer.bind(this)}/>
                 </Drawer>

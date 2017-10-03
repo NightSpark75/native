@@ -4,16 +4,13 @@ import { AppRegistry, StyleSheet, Text, View, Button } from 'react-native';
 import { StackNavigator, NavigationActions } from 'react-navigation'
 import FileTransfer from '@remobile/react-native-file-transfer';
 import RNFS from 'react-native-fs';
-import RNRestart from 'react-native-restart';
+import config from '../../config';
 
-const VERSION = '1.23.9'
-const VERSION_NUMBER = 1001023009;
-const URL_VERSION = 'http://172.17.100.51/api/native/pad/bundle/version';
-const URL_DOWNLOAD = 'http://172.17.100.51/api/native/pad/bundle/download';
+const VERSION = config.version
+const VERSION_NUMBER = config.version_number;
+const URL_VERSION = config.url_version;
+const URL_DOWNLOAD = config.url_download;
 
-
-//export default function hotUpdate() {
-//    class hotUpdate extends Component {
 export default class hotUpdate extends Component {
     constructor(props) {
         super(props);
@@ -30,29 +27,27 @@ export default class hotUpdate extends Component {
             .then((json) => {
                 self.setState({ message: '最新版本為：' + json.version });
                 let bundlePath = RNFS.DocumentDirectoryPath + '/index.android.bundle';
-                //let bundlePath = '/sdcard/data/index.android.bundle';
-                //let bundlePath = '/data/user/0/com.stdnative/cache/123131.bundle'
+                let file_size = json.size;
                 if (json.result && (json.version_number > VERSION_NUMBER)) {
                     let fileTransfer = new FileTransfer();
                     let msg;
                     self.setState({ message: '下載程序開始' });
                     fileTransfer.onprogress = (progress) => {
-                        self.setState({ message: progress.loaded + '/' + progress.total })
+                        self.setState({ message: progress.loaded + '/' + file_size });
                     };
-                    // url：新版本bundle的zip的url地址
-                    // bundlePath：存在新版本bundle的路径
-                    // unzipJSZipFile：下载完成后执行的回调方法，这里是解压缩zip
-                    //self.setState({ message: URL_DOWNLOAD })
-                    fileTransfer.download(encodeURI(URL_DOWNLOAD), bundlePath 
-                    , (result) => {
-                        console.log(result);
-                        self.setState({ message: '程式已更新，請重新啟動!!'});
-                    }
-                    , (err) => {
-                        console.log(err);
-                        self.setState({ message: err.exception });
-                    }
-                    , true
+                    fileTransfer.download(
+                        encodeURI(URL_DOWNLOAD), 
+                        bundlePath , 
+                        (result) => {
+                            console.log(result);
+                            self.setState({ message: JSON.stringify(result)});
+                            self.setState({ message: '程式已更新，請重新啟動!!'});
+                        },
+                        (err) => {
+                            console.log(err);
+                            self.setState({ message: err.exception });
+                        },
+                        true
                     );
                 } else {
                     self.setState({ message: '沒有新版本需要更新...' });

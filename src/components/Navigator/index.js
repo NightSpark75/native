@@ -14,9 +14,6 @@ export default class initProject extends Component {
 
         this.state = {};
     }
-    componentDidMount() {
-        
-    }
     render() {
         return (
             <Navigator/>

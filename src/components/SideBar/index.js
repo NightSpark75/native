@@ -1,10 +1,9 @@
 'use strict'
 import React, { Component } from 'react';
-import { AppRegistry } from 'react-native';
+import { AppRegistry, Image } from 'react-native';
 
-import { Container, Header, Content, StyleProvider } from 'native-base';
-import { Form, Item, Input, Left, Body, Right, Title, H1, Label, List, ListItem } from 'native-base';
-import { Button, Text, Icon } from 'native-base';
+import { Container, Content, StyleProvider } from 'native-base';
+import { List, ListItem, Text, Icon, Left, Body, Right, Switch } from 'native-base';
 
 import getTheme from '../NativeBase/components';
 import material from '../NativeBase/variables/material';
@@ -13,46 +12,66 @@ import material from '../NativeBase/variables/material';
 export default class SideBar extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {};
+        this.state = {
+            menu: this.props.menu,
+        };
     }
 
     render() {
         return (
-            <StyleProvider style={getTheme(material)}>
-                <Container>
-                    <Header>
+            <Container style={{backgroundColor: '#FFF'}}>
+                <List>
+                    <ListItem icon>
                         <Left>
+                            <Icon name="plane" />
                         </Left>
                         <Body>
-                            <Text>SideBar</Text>
+                            <Text>Airplane Mode</Text>
                         </Body>
-                        <Right></Right>
-                    </Header>
-                    <Content>
-                    <List>
-                        <ListItem itemHeader first>
-                        <Text>COMEDY</Text>
+                        <Right>
+                            <Switch value={false} />
+                        </Right>
+                    </ListItem>
+                    <ListItem icon>
+                        <Left>
+                            <Icon name="wifi" />
+                        </Left>
+                        <Body>
+                            <Text>Wi-Fi</Text>
+                        </Body>
+                        <Right>
+                            <Text>GeekyAnts</Text>
+                            <Icon name="arrow-forward" />
+                        </Right>
+                    </ListItem>
+                    <ListItem icon>
+                        <Left>
+                            <Icon name="bluetooth" />
+                        </Left>
+                        <Body>
+                            <Text>Bluetooth</Text>
+                        </Body>
+                        <Right>
+                            <Text>On</Text>
+                            <Icon name="arrow-forward" />
+                        </Right>
+                    </ListItem>
+                    {this.state.menu != [] && this.state.menu.map((item, index) => (
+                        <ListItem icon key={index}>
+                            <Left>
+                                <Icon name="bluetooth" />
+                            </Left>
+                            <Body>
+                                <Text>{item.name}</Text>
+                            </Body>
+                            <Right>
+                                <Text>On</Text>
+                                <Icon name="arrow-forward" />
+                            </Right>
                         </ListItem>
-                        <ListItem >
-                        <Text>Hangover</Text>
-                        </ListItem>
-                        <ListItem>
-                        <Text>Horrible Bosses</Text>
-                        </ListItem>
-                        <ListItem last>
-                        <Text>Conjuring</Text>
-                        </ListItem>
-                        <ListItem itemHeader>
-                        <Text>ACTION</Text>
-                        </ListItem>
-                        <ListItem>
-                        <Text>Terminator Genesis</Text>
-                        </ListItem>
-                    </List>
-                    </Content>
-                </Container>
-            </StyleProvider>
+                    ))}
+              </List>
+            </Container>
         );
     }
 }

@@ -29,12 +29,13 @@ export default class Hello extends Component {
                         </Body>
                         <Right></Right>
                     </Header>
-                    <Content padder style={{ alignSelf: "center" }}>
-                        <Title><H1>歡迎使用生達ERP</H1></Title>
+                    <Content padder style={{ alignSelf: 'center' }}>
                         <Image 
                             resizeMode={'contain'}
                             style={{width: 560, height: 140}} 
-                            source={{uri: 'http://172.17.100.51/images/web/stdshortnamelogo.jpg'}} />
+                            source={{uri: 'http://172.17.100.51/images/web/stdshortnamelogo.jpg'}} 
+                        />
+                        <Title><H1>歡迎使用生達ERP</H1></Title>
                     </Content>
                 </Container>
             </StyleProvider>

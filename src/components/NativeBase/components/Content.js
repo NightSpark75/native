@@ -3,7 +3,8 @@ import variable from "./../variables/platform";
 export default (variables = variable) => {
   const contentTheme = {
     ".padder": {
-      padding: variables.contentPadding
+      padding: variables.contentPadding,
+      backgroundColor: '#FFF',
     },
     flex: 1,
     backgroundColor: "transparent",
