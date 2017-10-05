@@ -33,14 +33,13 @@ export default class hotUpdate extends Component {
                     let msg;
                     self.setState({ message: '下載程序開始' });
                     fileTransfer.onprogress = (progress) => {
-                        self.setState({ message: progress.loaded + '/' + file_size });
+                        self.setState({ message: progress.loaded + '/' + Math.round(file_size / 3.7) });
                     };
                     fileTransfer.download(
                         encodeURI(URL_DOWNLOAD), 
                         bundlePath , 
                         (result) => {
                             console.log(result);
-                            self.setState({ message: JSON.stringify(result)});
                             self.setState({ message: '程式已更新，請重新啟動!!'});
                         },
                         (err) => {
