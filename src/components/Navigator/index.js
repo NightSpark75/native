@@ -6,6 +6,11 @@ import { StackNavigator, NavigationActions } from 'react-navigation'
 import RouteConfigs from './routeConfigs';
 import StackNavigatorConfig from './stackNavigatorConfig';
 
+import { Provider } from 'react-redux'
+import configureStore from '../../store/configureStore'
+const store = configureStore();
+
+
 const Navigator = StackNavigator(RouteConfigs, StackNavigatorConfig);
 
 export default class initProject extends Component {
@@ -16,7 +21,9 @@ export default class initProject extends Component {
     }
     render() {
         return (
-            <Navigator/>
+            <Provider store={store}>
+                <Navigator />
+            </Provider>
         )
     };
 }

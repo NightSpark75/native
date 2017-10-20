@@ -1,17 +1,27 @@
 'use strict'
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View, Button } from 'react-native';
-import { StackNavigator, NavigationActions } from 'react-navigation'
+import { StackNavigator, NavigationActions } from 'react-navigation';
 import FileTransfer from '@remobile/react-native-file-transfer';
 import RNFS from 'react-native-fs';
 import config from '../../config';
+
+/*
+import { createStore } from 'redux'
+import reducers from '../../reducers'
+import { login_user } from '../../actions'
+let store = createStore(reducers)
+*/
+
+import { connect } from 'react-redux';
+import { login_user } from '../../actions'
 
 const VERSION = config.version
 const VERSION_NUMBER = config.version_number;
 const URL_VERSION = config.url_version;
 const URL_DOWNLOAD = config.url_download;
 
-export default class hotUpdate extends Component {
+class hotUpdate extends Component {
     constructor(props) {
         super(props);
 
@@ -33,7 +43,7 @@ export default class hotUpdate extends Component {
                     let msg;
                     self.setState({ message: '下載程序開始' });
                     fileTransfer.onprogress = (progress) => {
-                        self.setState({ message: progress.loaded + '/' + Math.round(file_size / 3.7) });
+                        self.setState({ message: + Math.round((progress.loaded / (file_size / 3.7) * 100)) + '%' });
                     };
                     fileTransfer.download(
                         encodeURI(URL_DOWNLOAD), 
@@ -59,6 +69,10 @@ export default class hotUpdate extends Component {
     }
 
     goLogin() {
+        const {navigator, dispatch} = this.props;
+        dispatch(login_user([{name: '1111'}, {name: '2222'}]))
+        const { login } = this.props;
+        alert(login.user_info[0].name)
         const resetAction = NavigationActions.reset({
             index: 0,
             actions: [
@@ -74,7 +88,7 @@ export default class hotUpdate extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.welcome}>
-                    版本：{VERSION}
+                    目前版本：{VERSION}
                 </Text>
                 <Text style={styles.welcome}>
                     {this.state.message}
@@ -97,5 +111,14 @@ const styles = StyleSheet.create({
         margin: 10,
     }
 });
+
+function mapStateToProps(state) {
+	const { login } = state
+	return {
+		login
+	}
+}
+
+export default connect(mapStateToProps)(hotUpdate);
 
 AppRegistry.registerComponent('hotupdate', () => hotUpdate);

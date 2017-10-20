@@ -6,10 +6,13 @@ import { Container, Header, Content, StyleProvider } from 'native-base';
 import { Form, Item, Input, Left, Body, Right, Title, Label } from 'native-base';
 import { Button, Text } from 'native-base';
 
+import { createStore } from 'redux'
+import reducers from '../../reducers'
+
 import getTheme from '../NativeBase/components';
 import material from '../NativeBase/variables/material';
 
-var STORAGE_KEY = 'I_AM_KEY';
+let store = createStore(reducers)
 
 export default class Login extends Component {
     constructor(props) {
@@ -18,10 +21,23 @@ export default class Login extends Component {
         this.state = {};
     }
 
+    componentDidMount() {
+        
+    }
 
     onLogin() {
         
     }
+
+    /*
+    store.dispatch({
+        type: 'LOGIN_USER',
+        user: [
+            {name: '1111'}, 
+            {name: '2222'},
+        ],
+    })
+    */
 
     render() {
         return (

@@ -8,14 +8,26 @@ import { Button, Icon } from 'native-base';
 
 import getTheme from '../../components/NativeBase/components';
 import material from '../../components/NativeBase/variables/material';
+import config from '../../config';
 
-export default class Hello extends Component {
+import { connect } from 'react-redux';
+
+import { login_user } from '../../actions'
+
+class Hello extends Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
 
+    componentDidMount() {
+        //store.dispatch(login_user([{name: '1111'}, {name: '2222'}]))
+    }
+
     render() {
+        const { login } = this.props
+        //console.log(login);
+        const user_info = login.user_info
         return (
             <StyleProvider style={getTheme(material)}>
                 <Container>
@@ -33,14 +45,26 @@ export default class Hello extends Component {
                         <Image 
                             resizeMode={'contain'}
                             style={{width: 560, height: 140}} 
-                            source={{uri: 'http://172.17.100.51/images/web/stdshortnamelogo.jpg'}} 
+                            source={{uri: config.url_image + 'stdshortnamelogo.jpg'}} 
                         />
                         <Title><H1>歡迎使用生達ERP</H1></Title>
+                        {user_info && user_info.map((item, index) => (
+                            <H1 key={index}>{ item.name }</H1>
+                        ))}
                     </Content>
                 </Container>
             </StyleProvider>
         );
     }
 }
+
+function mapStateToProps(state) {
+	const { login } = state
+	return {
+		login
+	}
+}
+
+export default connect(mapStateToProps)(Hello);
 
 AppRegistry.registerComponent('Hello', () => Hello);
