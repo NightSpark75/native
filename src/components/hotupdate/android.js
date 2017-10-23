@@ -5,14 +5,6 @@ import { StackNavigator, NavigationActions } from 'react-navigation';
 import FileTransfer from '@remobile/react-native-file-transfer';
 import RNFS from 'react-native-fs';
 import config from '../../config';
-
-/*
-import { createStore } from 'redux'
-import reducers from '../../reducers'
-import { login_user } from '../../actions'
-let store = createStore(reducers)
-*/
-
 import { connect } from 'react-redux';
 import { login_user } from '../../actions'
 
@@ -69,10 +61,13 @@ class hotUpdate extends Component {
     }
 
     goLogin() {
-        const {navigator, dispatch} = this.props;
+        /*
+        
         dispatch(login_user([{name: '1111'}, {name: '2222'}]))
         const { login } = this.props;
         alert(login.user_info[0].name)
+        */
+        //const {navigator, dispatch} = this.props;
         const resetAction = NavigationActions.reset({
             index: 0,
             actions: [
@@ -120,5 +115,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(hotUpdate);
-
 AppRegistry.registerComponent('hotupdate', () => hotUpdate);

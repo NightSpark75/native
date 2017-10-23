@@ -9,9 +9,7 @@ import { Button, Icon } from 'native-base';
 import getTheme from '../../components/NativeBase/components';
 import material from '../../components/NativeBase/variables/material';
 import config from '../../config';
-
 import { connect } from 'react-redux';
-
 import { login_user } from '../../actions'
 
 class Hello extends Component {
@@ -21,12 +19,12 @@ class Hello extends Component {
     }
 
     componentDidMount() {
-        //store.dispatch(login_user([{name: '1111'}, {name: '2222'}]))
+        const { dispatch } = this.props
+        dispatch(login_user([{name: '1111'}, {name: '2222'}]))
     }
 
     render() {
         const { login } = this.props
-        //console.log(login);
         const user_info = login.user_info
         return (
             <StyleProvider style={getTheme(material)}>
@@ -66,5 +64,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Hello);
-
 AppRegistry.registerComponent('Hello', () => Hello);

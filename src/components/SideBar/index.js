@@ -9,16 +9,12 @@ import { View, List, ListItem, Text, Icon, Left, Body, Right, Switch, Separator 
 import getTheme from '../NativeBase/components';
 import material from '../NativeBase/variables/material';
 import LocalStorage from '../../lib/LocalStorage';
+import { connect } from 'react-redux';
+import { login_user } from '../../actions'
 
 const STORAGE = new LocalStorage();
 
-import { createStore } from 'redux'
-import reducers from '../../reducers'
-let store = createStore(reducers)
-
-import { login_user } from '../../actions'
-
-export default class SideBar extends Component {
+class SideBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,15 +25,6 @@ export default class SideBar extends Component {
 
     componentDidMount() {
         this.getCommonMenu();
-        /*
-        store.dispatch({
-            type: 'LOGIN_USER',
-            user: [
-                {name: '1111'}, 
-                {name: '2222'},
-            ],
-        })
-        */
     }
 
     async getCommonMenu() {
@@ -60,10 +47,8 @@ export default class SideBar extends Component {
 
     render() {
         const { commonMenu } = this.state;
-        const { login } = store.getState();
-        //alert(loginState);
+        const { login } = this.props
         const menu = login.user_info;
-        console.log(store.getState())
         return (
             <StyleProvider style={getTheme(material)}>
                 <Container style={{backgroundColor: '#fff', margin: 0}}>
@@ -104,4 +89,12 @@ export default class SideBar extends Component {
     }
 }
 
+function mapStateToProps(state) {
+	const { login } = state
+	return {
+		login
+	}
+}
+
+export default connect(mapStateToProps)(SideBar);
 AppRegistry.registerComponent('SideBar', () => SideBar);

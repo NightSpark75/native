@@ -29,16 +29,6 @@ export default class Login extends Component {
         
     }
 
-    /*
-    store.dispatch({
-        type: 'LOGIN_USER',
-        user: [
-            {name: '1111'}, 
-            {name: '2222'},
-        ],
-    })
-    */
-
     render() {
         return (
             <StyleProvider style={getTheme(material)}>
