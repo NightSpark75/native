@@ -7,6 +7,8 @@ import RNFS from 'react-native-fs';
 import config from '../../config';
 import { connect } from 'react-redux';
 import { login_user } from '../../actions'
+import RNRestart from 'react-native-restart';
+import { NativeModules } from 'react-native';
 
 const VERSION = config.version
 const VERSION_NUMBER = config.version_number;
@@ -43,6 +45,7 @@ class hotUpdate extends Component {
                         (result) => {
                             console.log(result);
                             self.setState({ message: '程式已更新，請重新啟動!!'});
+                            NativeModules.Common.reloadBundle();
                         },
                         (err) => {
                             console.log(err);
@@ -61,13 +64,6 @@ class hotUpdate extends Component {
     }
 
     goLogin() {
-        /*
-        
-        dispatch(login_user([{name: '1111'}, {name: '2222'}]))
-        const { login } = this.props;
-        alert(login.user_info[0].name)
-        */
-        //const {navigator, dispatch} = this.props;
         const resetAction = NavigationActions.reset({
             index: 0,
             actions: [

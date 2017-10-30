@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { AppRegistry, AsyncStorage, Image } from 'react-native';
 
 import { Container, Header, Content, StyleProvider } from 'native-base';
-import { Left, Body, Right, Title, H1 } from 'native-base';
+import { Left, Body, Right, Title, H1, Text } from 'native-base';
 import { Button, Icon } from 'native-base';
 
 import getTheme from '../../components/NativeBase/components';
@@ -11,6 +11,8 @@ import material from '../../components/NativeBase/variables/material';
 import config from '../../config';
 import { connect } from 'react-redux';
 import { login_user } from '../../actions'
+
+import { NativeModules } from 'react-native';
 
 class Hello extends Component {
     constructor(props) {
@@ -20,7 +22,11 @@ class Hello extends Component {
 
     componentDidMount() {
         const { dispatch } = this.props
-        dispatch(login_user([{name: '1111'}, {name: '2222'}]))
+        dispatch(login_user([{name: '8888'}, {name: '9999'}]))
+    }
+
+    test() {
+        NativeModules.Common.reloadBundle();
     }
 
     render() {
@@ -49,6 +55,9 @@ class Hello extends Component {
                         {user_info && user_info.map((item, index) => (
                             <H1 key={index}>{ item.name }</H1>
                         ))}
+                        <Button block primary onPress={this.test.bind(this)}>
+                            <Text>測試</Text>
+                        </Button>
                     </Content>
                 </Container>
             </StyleProvider>

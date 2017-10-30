@@ -1,5 +1,6 @@
 package com.stdnative;
 
+import android.app.Activity;
 import android.app.Application;
 import android.os.Environment;
 
@@ -14,26 +15,25 @@ import com.avishayil.rnrestart.ReactNativeRestartPackage;
 
 import java.util.Arrays;
 import java.util.List;
-import java.io.File;
-import android.util.Log;
-
-import android.support.annotation.Nullable;
+import java.io.*;
 
 public class MainApplication extends Application implements ReactApplication {
 
+    public static final String JS_BUNDLE_LOCAL_PATH = "/data/user/0/com.stdnative/files/index.android.bundle";
+
     private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
-        
         @Override
         protected String getJSBundleFile() {
-            String path = "/data/user/0/com.stdnative/files/index.android.bundle";
-            //String path = "/sdcard/data/index.android.bundle";
-            
+            System.out.println("### native host get js bundle");
+            String path = JS_BUNDLE_LOCAL_PATH;          
             File bundleFile = new File(path);
+
             if (bundleFile != null && bundleFile.exists()) {
+                System.out.println("### file exists");
                 return path;
-            } else {
-                return null;
             }
+            System.out.println("### file not exists");
+            return null;
         }
 
         @Override
@@ -43,6 +43,7 @@ public class MainApplication extends Application implements ReactApplication {
 
         @Override
         protected List<ReactPackage> getPackages() {
+            System.out.println("### native host set packages");
             return Arrays.<ReactPackage>asList(
                 new MainReactPackage(),
                 new RCTFileTransferPackage(),
@@ -53,7 +54,6 @@ public class MainApplication extends Application implements ReactApplication {
             );
         }
     };
-  
 
     @Override
     public ReactNativeHost getReactNativeHost() {
@@ -62,6 +62,7 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     public void onCreate() {
+        System.out.println("### application create");
         super.onCreate(); 
         SoLoader.init(this, /* native exopackage */ false);
     }

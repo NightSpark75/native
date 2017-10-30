@@ -12,21 +12,21 @@ import java.util.List;;
 
 class CommonReactPackage implements ReactPackage {
   
-  public List<Class<? extends JavaScriptModule>> createJSModules() {
-    return Collections.emptyList();
-  }
+	public List<Class<? extends JavaScriptModule>> createJSModules() {
+		return Collections.emptyList();
+	}
 
-  @Override
-  public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-    return Collections.emptyList();
-  }
+	@Override
+	public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
+		return Collections.emptyList();
+	}
 
-  @Override
-  public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-    List<NativeModule> modules = new ArrayList<>();
+	@Override
+	public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+		List<NativeModule> modules = new ArrayList<>();
 
-    modules.add(new Common(reactContext));
+		modules.add(new Common(reactContext));
 
-    return modules;
-  }
+		return modules;
+	}
 }
