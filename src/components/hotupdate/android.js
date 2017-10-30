@@ -21,6 +21,8 @@ class hotUpdate extends Component {
 
         this.state = {
             message: '檢查更新中...',
+            new_version: null,
+            update: false,
         }
     }
 
@@ -29,23 +31,25 @@ class hotUpdate extends Component {
         fetch(URL_VERSION, {mode: 'cors'})
             .then((response) => response.json())
             .then((json) => {
-                self.setState({ message: '最新版本為：' + json.version });
+                self.setState({ 
+                    message: '最新版本為：' + json.version,
+                    new_version: json.version,
+                });
                 let bundlePath = RNFS.DocumentDirectoryPath + '/index.android.bundle';
                 let file_size = json.size;
                 if (json.result && (json.version_number > VERSION_NUMBER)) {
                     let fileTransfer = new FileTransfer();
                     let msg;
-                    self.setState({ message: '下載程序開始' });
-                    fileTransfer.onprogress = (progress) => {
-                        self.setState({ message: + Math.round((progress.loaded / (file_size / 3.7) * 100)) + '%' });
-                    };
+                    self.setState({ message: '更新檔下載中...' });
                     fileTransfer.download(
                         encodeURI(URL_DOWNLOAD), 
                         bundlePath , 
                         (result) => {
                             console.log(result);
-                            self.setState({ message: '程式已更新，請重新啟動!!'});
-                            NativeModules.Common.reloadBundle();
+                            self.setState({ 
+                                message: '程式已更新，請重新啟動!!',
+                                update: true,
+                            })
                         },
                         (err) => {
                             console.log(err);
@@ -75,15 +79,27 @@ class hotUpdate extends Component {
         this.props.navigation.dispatch(resetAction);
     }
 
+    goRestart() {
+        NativeModules.Common.reloadBundle();
+    }
+
     render() {
+        const { message, update } = this.state;
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>
+                <Text style={styles.message}>
                     目前版本：{VERSION}
                 </Text>
-                <Text style={styles.welcome}>
-                    {this.state.message}
+                <Text style={styles.message}>
+                    {message}
                 </Text>
+                { update && 
+                    <Button 
+                        title="重新啟動應用程式" 
+                        onPress={this.goRestart.bind(this)} 
+                        style={styles.restart} 
+                    />
+                }
             </View>
         );
     }
@@ -96,9 +112,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
     },
-    welcome: {
+    message: {
         fontSize: 20,
         textAlign: 'center',
+        margin: 10,
+        color: '#000',
+    },
+    restart: {
+        textAlign: 'center',
+        fontSize: 26,
+        color: '#64B5F6',
         margin: 10,
     }
 });

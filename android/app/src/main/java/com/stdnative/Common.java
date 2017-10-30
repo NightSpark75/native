@@ -56,23 +56,15 @@ class Common extends ReactContextBaseJavaModule {
 		if(file == null || !file.exists()){
 			System.out.println("### download error, check URL or network state");
 			return;
-		} else {
-			System.out.println("### file exists");
 		}
-
-		
-		System.out.println("### reloadBundle");
-		
 		UiThreadUtil.runOnUiThread(new Runnable() {
             @Override
             public void run() {
 				File file = new File("/data/user/0/com.stdnative/files/index.android.bundle");
                 try {
-					System.out.println("### start reload");
                     Activity activity = getCurrentActivity();
                     Application application = activity.getApplication();
                     ReactInstanceManager instanceManager = ((ReactApplication) application).getReactNativeHost().getReactInstanceManager();
-
                     try {
                         Field jsBundleField = instanceManager.getClass().getDeclaredField("mJSBundleFile");
                         jsBundleField.setAccessible(true);
@@ -83,57 +75,15 @@ class Common extends ReactContextBaseJavaModule {
                         loadField.setAccessible(true);
                         loadField.set(instanceManager, loader);
                     }
-
                     final Method recreateMethod = instanceManager.getClass().getMethod("recreateReactContextInBackground");
-
                     final ReactInstanceManager finalizedInstanceManager = instanceManager;
-
                     recreateMethod.invoke(finalizedInstanceManager);
-
                     activity.recreate();
                 } catch (Throwable err) {
 					System.out.println("### Failed to restart application" + err);
                 }
             }
         });
-
-		//replaceBundle();
-		/*
-		try {
-			System.out.println("### start reload");
-			ReactApplication application = (ReactApplication) getCurrentActivity().getApplication();
-			Class<?> RIManagerClazz = application.getReactNativeHost().getReactInstanceManager().getClass();
-			Method method = RIManagerClazz.getDeclaredMethod("recreateReactContextInBackground",
-					JavaScriptExecutor.Factory.class, JSBundleLoader.class);
-			method.setAccessible(true);
-			System.out.println("### " + file.getAbsolutePath());
-			method.invoke(
-				application.getReactNativeHost().getReactInstanceManager(),	
-				new JSCJavaScriptExecutor.Factory(JSCConfig.EMPTY.getConfigMap()),
-				JSBundleLoader.createFileLoader(file.getAbsolutePath()));
-				//getReactApplicationContext().getApplicationContext(), 
-			System.out.println("### 5");
-		} catch (NoSuchMethodException e) {
-			System.out.println("### NoSuchMethodException");
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			System.out.println("### IllegalAccessException");
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			System.out.println("### InvocationTargetException");
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			System.out.println("### IllegalArgumentException");
-			e.printStackTrace();
-		}
-		*/
-		/*
-		Activity currActivity = getCurrentActivity();
-		if(currActivity != null){
-			((ReactApplication) currActivity.getApplication()).getReactNativeHost().clear();
-			currActivity.recreate();
-		}
-		*/
 	}
 	
 	@Override

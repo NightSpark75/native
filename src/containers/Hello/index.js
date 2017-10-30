@@ -22,11 +22,7 @@ class Hello extends Component {
 
     componentDidMount() {
         const { dispatch } = this.props
-        dispatch(login_user([{name: '8888'}, {name: '9999'}]))
-    }
-
-    test() {
-        NativeModules.Common.reloadBundle();
+        //dispatch(login_user([{name: '8888'}, {name: '9999'}]))
     }
 
     render() {
@@ -52,12 +48,6 @@ class Hello extends Component {
                             source={{uri: config.url_image + 'stdshortnamelogo.jpg'}} 
                         />
                         <Title><H1>歡迎使用生達ERP</H1></Title>
-                        {user_info && user_info.map((item, index) => (
-                            <H1 key={index}>{ item.name }</H1>
-                        ))}
-                        <Button block primary onPress={this.test.bind(this)}>
-                            <Text>測試</Text>
-                        </Button>
                     </Content>
                 </Container>
             </StyleProvider>

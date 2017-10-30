@@ -24,15 +24,11 @@ public class MainApplication extends Application implements ReactApplication {
     private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
         @Override
         protected String getJSBundleFile() {
-            System.out.println("### native host get js bundle");
             String path = JS_BUNDLE_LOCAL_PATH;          
             File bundleFile = new File(path);
-
             if (bundleFile != null && bundleFile.exists()) {
-                System.out.println("### file exists");
                 return path;
             }
-            System.out.println("### file not exists");
             return null;
         }
 
@@ -43,7 +39,6 @@ public class MainApplication extends Application implements ReactApplication {
 
         @Override
         protected List<ReactPackage> getPackages() {
-            System.out.println("### native host set packages");
             return Arrays.<ReactPackage>asList(
                 new MainReactPackage(),
                 new RCTFileTransferPackage(),
@@ -62,7 +57,6 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     public void onCreate() {
-        System.out.println("### application create");
         super.onCreate(); 
         SoLoader.init(this, /* native exopackage */ false);
     }
