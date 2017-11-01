@@ -1,7 +1,7 @@
 export default {
     name: 'stdnative',
-    version: '1.23.5',
-    version_number: 1001023005,
+    version: '1.23.9',
+    version_number: 1001023009,
     url_version: 'http://172.17.100.51/api/native/pad/bundle/version',
     url_download: 'http://172.17.100.51/api/native/pad/bundle/download',
     url_image: 'http://172.17.100.51/images/web/',

@@ -1,6 +1,46 @@
 import hotUpdate from '../../components/HotUpdate/android';
 import Root from '../Root';
 import Login from '../Login';
+import Common_QC_Document from '../common/qc/document';
+
+export default {
+    // system
+    // Page: { screen: Page },
+    HotUpdate: {
+        screen: hotUpdate,
+        navigationOptions: ({navigation}) => ({
+            header: null,
+            headerBackTitle: null,
+        }),
+    },
+    Root: {
+        screen: Root,
+        navigationOptions: ({navigation}) => ({
+            header: null,
+            headerBackTitle: null,
+            headerLeft: null,
+        }),
+    },
+
+    // common
+    _comm_sys_login: {
+        screen: Login,
+        navigationOptions: ({navigation}) => ({
+            header: null,
+            headerBackTitle: null,
+            headerLeft: null,
+        }),
+    },
+    _comm_qc_document: {
+        screen: Common_QC_Document,
+        navigationOptions: ({navigation}) => ({
+            header: null,
+            headerBackTitle: null,
+            headerLeft: null,
+        }),
+    },
+}
+
 
 /*
 navigationOptions：配置StackNavigator的一些属性。  
@@ -49,28 +89,3 @@ initialRouteName：设置默认的页面组件，必须是上面已注册的页�
  
 initialRouteParams：初始路由参数
 */
-export default {
-    HotUpdate: {
-        screen: hotUpdate,
-        navigationOptions: ({navigation}) => ({
-            header: null,
-            headerBackTitle: null,
-        }),
-    },
-    Root: {
-        screen: Root,
-        navigationOptions: ({navigation}) => ({
-            header: null,
-            headerBackTitle: null,
-            headerLeft: null,
-        }),
-    },
-    Login: {
-        screen: Login,
-        navigationOptions: ({navigation}) => ({
-            header: null,
-            headerBackTitle: null,
-            headerLeft: null,
-        }),
-    },
-}

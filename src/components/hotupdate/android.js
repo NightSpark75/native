@@ -1,12 +1,10 @@
 'use strict'
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View, Button } from 'react-native';
-import { StackNavigator, NavigationActions } from 'react-navigation';
+import { NavigationActions, withNavigation } from 'react-navigation';
 import FileTransfer from '@remobile/react-native-file-transfer';
 import RNFS from 'react-native-fs';
 import config from '../../config';
-import { connect } from 'react-redux';
-import { login_user } from '../../actions'
 import RNRestart from 'react-native-restart';
 import { NativeModules } from 'react-native';
 
@@ -28,10 +26,10 @@ class hotUpdate extends Component {
 
     componentDidMount() {
         let self = this;
-        fetch(URL_VERSION, {mode: 'cors'})
+        fetch(URL_VERSION, { mode: 'cors' })
             .then((response) => response.json())
             .then((json) => {
-                self.setState({ 
+                self.setState({
                     message: '最新版本為：' + json.version,
                     new_version: json.version,
                 });
@@ -42,11 +40,11 @@ class hotUpdate extends Component {
                     let msg;
                     self.setState({ message: '更新檔下載中...' });
                     fileTransfer.download(
-                        encodeURI(URL_DOWNLOAD), 
-                        bundlePath , 
+                        encodeURI(URL_DOWNLOAD),
+                        bundlePath,
                         (result) => {
                             console.log(result);
-                            self.setState({ 
+                            self.setState({
                                 message: '程式已更新，請重新啟動!!',
                                 update: true,
                             })
@@ -62,7 +60,7 @@ class hotUpdate extends Component {
                     self.goLogin();
                 }
             })
-            .catch(function(error) { 
+            .catch(function (error) {
                 self.setState({ message: error.exception })
             });
     }
@@ -93,11 +91,11 @@ class hotUpdate extends Component {
                 <Text style={styles.message}>
                     {message}
                 </Text>
-                { update && 
-                    <Button 
-                        title="重新啟動應用程式" 
-                        onPress={this.goRestart.bind(this)} 
-                        style={styles.restart} 
+                {update &&
+                    <Button
+                        title="重新啟動應用程式"
+                        onPress={this.goRestart.bind(this)}
+                        style={styles.restart}
                     />
                 }
             </View>
@@ -126,12 +124,5 @@ const styles = StyleSheet.create({
     }
 });
 
-function mapStateToProps(state) {
-	const { login } = state
-	return {
-		login
-	}
-}
-
-export default connect(mapStateToProps)(hotUpdate);
+export default withNavigation(hotUpdate);
 AppRegistry.registerComponent('hotupdate', () => hotUpdate);

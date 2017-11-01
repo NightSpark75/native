@@ -1,18 +1,12 @@
 'use strict'
 import React, { Component } from 'react';
-import { AppRegistry, AsyncStorage, Image } from 'react-native';
-
+import { AppRegistry, AsyncStorage, StyleSheet, Image } from 'react-native';
 import { Container, Header, Content, StyleProvider } from 'native-base';
-import { Left, Body, Right, Title, H1, Text } from 'native-base';
-import { Button, Icon } from 'native-base';
-
+import { Left, Body, Right, Title, H1, Text, Icon, Button } from 'native-base';
+import { NavigationActions, withNavigation } from 'react-navigation';
 import getTheme from '../../components/NativeBase/components';
 import material from '../../components/NativeBase/variables/material';
 import config from '../../config';
-import { connect } from 'react-redux';
-import { login_user } from '../../actions'
-
-import { NativeModules } from 'react-native';
 
 class Hello extends Component {
     constructor(props) {
@@ -21,13 +15,10 @@ class Hello extends Component {
     }
 
     componentDidMount() {
-        const { dispatch } = this.props
-        //dispatch(login_user([{name: '8888'}, {name: '9999'}]))
-    }
 
+    }
+    
     render() {
-        const { login } = this.props
-        const user_info = login.user_info
         return (
             <StyleProvider style={getTheme(material)}>
                 <Container>
@@ -55,12 +46,5 @@ class Hello extends Component {
     }
 }
 
-function mapStateToProps(state) {
-	const { login } = state
-	return {
-		login
-	}
-}
-
-export default connect(mapStateToProps)(Hello);
+export default withNavigation(Hello);
 AppRegistry.registerComponent('Hello', () => Hello);

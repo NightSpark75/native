@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
 import { StackNavigator, NavigationActions } from 'react-navigation'
-
+import { Root } from "native-base";
 import RouteConfigs from './routeConfigs';
 import StackNavigatorConfig from './stackNavigatorConfig';
 
@@ -22,7 +22,9 @@ export default class initProject extends Component {
     render() {
         return (
             <Provider store={store}>
-                <Navigator />
+                <Root>
+                    <Navigator />
+                </Root>
             </Provider>
         )
     };
