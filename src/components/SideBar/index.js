@@ -4,7 +4,7 @@ import { AppRegistry, Image } from 'react-native';
 import axios from 'axios';
 import { NavigationActions, withNavigation } from 'react-navigation';
 import { Container, Content, StyleProvider } from 'native-base';
-import { View, List, ListItem, Text, Icon, Left, Body, Right, Switch, Separator } from 'native-base';
+import { View, List, ListItem, Text, Icon, Left, Body, Right, Switch, Separator, Button } from 'native-base';
 
 import getTheme from '../NativeBase/components';
 import material from '../NativeBase/variables/material';
@@ -17,7 +17,7 @@ class SideBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            commonMenu: this.props.commonMenu,
+            commonMenu: [],
         };
     }
 
@@ -49,6 +49,7 @@ class SideBar extends Component {
             routeName: path,
             params: {},
         });
+        this.props.closeDrawer;
         this.props.navigation.dispatch(navigationAction);
     }
 
@@ -60,57 +61,67 @@ class SideBar extends Component {
         return (
             <StyleProvider style={getTheme(material)}>
                 <Container style={{backgroundColor: '#fff', margin: 0}}>
-                    <List style={{margin:0}}>
-                        <Separator bordered>
-                            <Text>功能清單</Text>
-                        </Separator>
-                        {user_menu != [] && user_menu.map((item, index) => (
-                            <ListItem icon key={index}>
-                                <Body>
-                                    <Text
-                                        onPress={this.goNavgation.bind(this, item.web_route)}
-                                    >
-                                        {item.prg_name}
-                                    </Text>
-                                </Body>
-                            </ListItem>
-                        ))}
-                        <Separator bordered>
-                            <Text>公用程式</Text>
-                        </Separator>
-                        {commonMenu != [] && commonMenu.map((item, index) => (
-                            <ListItem icon key={index}>
-                                <Body style={{marginLeft: 0}}>
-                                    <Text
-                                        onPress={this.goNavgation.bind(this, item.web_route)}
-                                    >
-                                        {item.prg_name}
-                                    </Text>
-                                </Body>
-                            </ListItem>
-                        ))}
-                        {user_info === '' ? 
-                            <ListItem icon>
-                                <Body style={{marginLeft: 0}}>
-                                    <Text 
-                                        onPress={this.goNavgation.bind(this, '/comm/sys/login')}
-                                    >
-                                        使用者登入
-                                    </Text>
-                                </Body>
-                            </ListItem>
-                        :
-                            <ListItem icon>
-                                <Body style={{marginLeft: 0}}>
-                                    <Text 
-                                        onPress={this.goNavgation.bind(this, '/comm/sys/logout')}
-                                    >
-                                        使用者 {user_info.user_id} 登出
-                                    </Text>
-                                </Body>
-                            </ListItem>
-                        }
-                    </List>
+                    {/*
+                    <View style={styles.containerHeaderStyle}>
+                        <Image style={styles.containerHeaderImageStyle} source={require('../assets/otsuka_sample.jpg')} />
+                        <View style={styles.overlayStyle}>
+                            <Text style={styles.overlayTextStyle}>大塚Deお買い物Menu</Text>
+                        </View>
+                    </View>
+                    */}
+                    <Content>
+                        <List>
+                            <Separator bordered>
+                                <Text>功能清單</Text>
+                            </Separator>
+                            {user_menu != [] && user_menu.map((item, index) => (
+                                <ListItem icon key={index}>
+                                    <Body>
+                                        <Text
+                                            onPress={this.goNavgation.bind(this, item.web_route)}
+                                        >
+                                            {item.prg_name}
+                                        </Text>
+                                    </Body>
+                                </ListItem>
+                            ))}
+                            <Separator bordered>
+                                <Text>公用程式</Text>
+                            </Separator>
+                            {commonMenu != [] && commonMenu.map((item, index) => (
+                                <ListItem icon key={index}>
+                                    <Body>
+                                        <Text
+                                            onPress={this.goNavgation.bind(this, item.web_route)}
+                                        >
+                                            {item.prg_name}
+                                        </Text>
+                                    </Body>
+                                </ListItem>
+                            ))}
+                            {user_info === '' ? 
+                                <ListItem icon>
+                                    <Body>
+                                        <Text 
+                                            onPress={() => this.props.goNavgation('/comm/sys/login')}
+                                        >
+                                            使用者登入
+                                        </Text>
+                                    </Body>
+                                </ListItem>
+                            :
+                                <ListItem icon>
+                                    <Body>
+                                        <Text 
+                                            onPress={this.goNavgation.bind(this, '/comm/sys/logout')}
+                                        >
+                                            使用者 {user_info.user_id} 登出
+                                        </Text>
+                                    </Body>
+                                </ListItem>
+                            }
+                        </List>
+                    </Content>
                 </Container>
             </StyleProvider>
         );

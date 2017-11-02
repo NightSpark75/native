@@ -5,6 +5,7 @@ import { AppRegistry, AsyncStorage } from 'react-native';
 import { NavigationActions, withNavigation } from 'react-navigation';
 import { Container, Header, Content, StyleProvider } from 'native-base';
 import { Form, Item, Input, Left, Body, Right, Title, Label, Toast } from 'native-base';
+import { List, ListItem } from 'native-base';
 import { Button, Text, Icon } from 'native-base';
 import getTheme from '../../../NativeBase/components';
 import material from '../../../NativeBase/variables/material';
@@ -47,6 +48,7 @@ class Comm_QC_Document extends Component {
                         <Right />
                     </Header>
                     <Content padder>
+                        
                     </Content>
                 </Container>
             </StyleProvider>
