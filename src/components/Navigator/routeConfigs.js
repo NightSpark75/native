@@ -1,6 +1,7 @@
 import hotUpdate from '../../components/HotUpdate/android';
 import Root from '../Root';
 import Login from '../Login';
+import WebView from '../Webview';
 import Common_QC_Document from '../common/qc/document';
 
 export default {
@@ -32,7 +33,8 @@ export default {
         }),
     },
     _comm_qc_document: {
-        screen: Common_QC_Document,
+        //screen: Common_QC_Document,
+        screen: WebView,
         navigationOptions: ({navigation}) => ({
             header: null,
             headerBackTitle: null,
